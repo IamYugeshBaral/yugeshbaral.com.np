@@ -14,7 +14,7 @@
         <div class="separator">
           <h5>My Works</h5>
         </div>
-        <SocialIcon id="github" link="https://github.com/TheLearneer" name="Github" />
+        <SocialIcon id="github" link="https://github.com/yogibrl" name="Github" />
       </div>
 
       <div class="separator">
@@ -36,15 +36,15 @@ export default {
   },
   data () {
     return {
-      email: 'contact@santoshb.com.np',
+      email: 'baralyogesh25@gmail.com',
       visibleMail: true,
       visibleGithub: true,
       title: 'Contact',
       socials: [
-        { link: 'https://www.facebook.com/santosh.bhandari.1401', id: 'facebook', name: 'Facebook' },
-        { link: 'https://www.instagram.com/bsantosh909', id: 'instagram', name: 'Instagram' },
-        { link: 'https://twitter.com/bsantosh909', id: 'twitter', name: 'Twitter' },
-        { link: 'https://www.youtube.com/user/TheSantoshbhandari', id: 'youtube', name: 'Youtube' }
+        { link: 'https://www.facebook.com/yogi.baral', id: 'facebook', name: 'Facebook' },
+        { link: 'https://www.instagram.com/yogi_brl', id: 'instagram', name: 'Instagram' },
+        { link: 'https://twitter.com/yogesh_baral', id: 'twitter', name: 'Twitter' },
+       // { link: 'https://www.youtube.com/user/TheSantoshbhandari', id: 'youtube', name: 'Youtube' }
       ]
     }
   },
