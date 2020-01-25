@@ -32,33 +32,45 @@
 <script>
 export default {
   components: {
-    SocialIcon: () => import('@/components/Social/Icon')
+    SocialIcon: () => import("@/components/Social/Icon")
   },
-  data () {
+  data() {
     return {
-      email: 'baralyogesh25@gmail.com',
+      email: "baralyogesh25@gmail.com",
       visibleMail: true,
       visibleGithub: true,
-      title: 'Contact',
+      title: "Contact",
       socials: [
-        { link: 'https://www.facebook.com/yogi.baral', id: 'facebook', name: 'Facebook' },
-        { link: 'https://www.instagram.com/yogi_brl', id: 'instagram', name: 'Instagram' },
-        { link: 'https://twitter.com/yogesh_baral', id: 'twitter', name: 'Twitter' },
-       // { link: 'https://www.youtube.com/user/TheSantoshbhandari', id: 'youtube', name: 'Youtube' }
+        {
+          link: "https://www.facebook.com/yogi.baral",
+          id: "facebook",
+          name: "Facebook"
+        },
+        {
+          link: "https://www.instagram.com/yogi_brl",
+          id: "instagram",
+          name: "Instagram"
+        },
+        {
+          link: "https://twitter.com/yogesh_baral",
+          id: "twitter",
+          name: "Twitter"
+        }
+        // { link: 'https://www.youtube.com/user/TheSantoshbhandari', id: 'youtube', name: 'Youtube' }
       ]
-    }
+    };
   },
   computed: {
-    socialChunk () {
-      const perRow = 4
-      const myArray = []
+    socialChunk() {
+      const perRow = 4;
+      const myArray = [];
       for (let i = 0; i < this.socials.length; i += perRow) {
-        myArray.push(this.socials.slice(i, i + perRow))
+        myArray.push(this.socials.slice(i, i + perRow));
       }
-      return myArray
+      return myArray;
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -76,8 +88,9 @@ a {
   padding-top: 50px;
   padding-bottom: 20px;
 }
-.separator::before, .separator::after {
-  content: '';
+.separator::before,
+.separator::after {
+  content: "";
   flex: 1;
   border-bottom: 1px solid #d9d9d9;
 }
