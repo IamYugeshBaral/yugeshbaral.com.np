@@ -1,7 +1,7 @@
 <template>
   <b-navbar toggleable="lg" type="dark" variant="dark">
     <b-navbar-brand to="/">
-      <img src="@/assets/img/logo.png" width="24" height="24" alt="Santosh Bhandari Initials" />
+      <img src="@/assets/img/logo.png" width="24" height="24" alt="Yugesh Baral" />
     </b-navbar-brand>
 
     <b-navbar-toggle target="nav-collapse" />
