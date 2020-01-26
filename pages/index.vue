@@ -10,9 +10,9 @@
         src="/img/me.jpg"
         height="256"
         class="rounded-circle border-3 border-solid border-indigo-200"
-        alt="Santosh Bhandari with an smile"
+        alt="Yugesh Baral with an smile"
       />
-      <h1 class="pt-4">Santosh Bhandari</h1>
+      <h1 class="pt-4">Yugesh Baral</h1>
       <p>
         <b>Developer &bull; Pro Gamer</b>
       </p>
@@ -22,7 +22,7 @@
         <h4 class="text-center pb-4">Hello!</h4>
         <p>
           My name is
-          <i>Santosh Bhandari</i> all the way from
+          <i>Yugesh Baral</i> all the way from
           <b>Kathmandu, Nepal</b>
           . I am currently {{ age }} years old. I am currently studying
           <b>Computer Engineering</b>.
