@@ -14,7 +14,7 @@
       />
       <h1 class="pt-4">Yugesh Baral</h1>
       <p>
-        <b>Developer &bull; Pro Gamer</b>
+        <b>Developer &bull; Pro Gamer 🤣🤣🤣</b>
       </p>
     </div>
     <div class="bg-gray-400 pt-5 pb-5 text-left">
