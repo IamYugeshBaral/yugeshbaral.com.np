@@ -12,17 +12,17 @@ export default {
   ],
   // Sitemap config...
   sitemap: {
-    hostname: 'https://santoshb.com.np',
+    hostname: 'https://yugeshbaral.com.np',
     defaults: {
       changefreq: 'daily'
     }
   },
   // Google adsense...
   'google-adsense': {
-    id: 'ca-pub-4087610164584593'
+    id: ''
   },
   // Google analytics...
   googleAnalytics: {
-    id: 'UA-155877975-1'
+    id: ''
   }
 }

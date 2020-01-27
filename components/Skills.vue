@@ -57,12 +57,12 @@ export default {
             { name: "C" },
             { name: "C++" },
             { name: "HTML" },
-            { name: "PHP" strong: true},
-           // { name: "Visual Basics" },
+            { name: "PHP", strong: true },
+            // { name: "Visual Basics" },
             { name: "SQL", strong: true }
           ]
-        },
-      /*  {
+        }
+        /*{
           title: "Front End Technologies",
           id: "skill-front-end",
           rating: 3,
@@ -91,10 +91,10 @@ export default {
             { name: "Visual Studio Code", strong: true },
             { name: "JSON", strong: true }
           ]
-        }
+        }*/
       ]
     };
-  },*/
+  },
   methods: {
     getSkillName(skill, index, length) {
       return `${skill}${index < length - 1 ? ", " : ""}`;
