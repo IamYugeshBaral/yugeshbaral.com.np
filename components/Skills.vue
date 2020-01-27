@@ -33,72 +33,74 @@
 <script>
 export default {
   components: {
-    ImageTransition: () => import('@/components/ImageTransition')
+    ImageTransition: () => import("@/components/ImageTransition")
   },
-  data () {
+  data() {
     return {
       images: [
-        { name: 'Vue.js', image: 'img/technology/vuejs.png' },
-        { name: 'Nuxt.js', image: 'img/technology/nuxtjs.png' },
+        //{ name: "Vue.js", image: "img/technology/vuejs.png" },
+        //{ name: "Nuxt.js", image: "img/technology/nuxtjs.png" },
         // { name: 'Github', image: 'img/technology/github.png' },
-        { name: 'Git', image: 'img/technology/git.png' },
-        { name: 'Bootstrap', image: 'img/technology/bootstrap.png' },
-        { name: 'Node.js', image: 'img/technology/nodejs.png' },
-        { name: 'VS Code', image: 'img/technology/vscode.png' }
+        //{ name: "Git", image: "img/technology/git.png" },
+        //{ name: "Bootstrap", image: "img/technology/bootstrap.png" },
+        //{ name: "Node.js", image: "img/technology/nodejs.png" },
+        //{ name: "VS Code", image: "img/technology/vscode.png" },
+        { name: "PHP", image: "img/technology/php.png" }
       ],
       skills: [
         {
-          title: 'Programming Languages',
-          id: 'skill-languages',
+          title: "Programming Languages",
+          id: "skill-languages",
           rating: 4,
           list: [
-            { name: 'Javascript', strong: true },
-            { name: 'C' },
-            { name: 'C++' },
-            { name: 'HTML' },
-            { name: 'Visual Basics' },
-            { name: 'SQL', strong: true }
+            { name: "Javascript", strong: true },
+            { name: "C" },
+            { name: "C++" },
+            { name: "HTML" },
+            { name: "PHP" strong: true},
+           // { name: "Visual Basics" },
+            { name: "SQL", strong: true }
           ]
         },
-        {
-          title: 'Front End Technologies',
-          id: 'skill-front-end',
+      /*  {
+          title: "Front End Technologies",
+          id: "skill-front-end",
           rating: 3,
           list: [
-            { name: 'Vue.js' },
-            { name: 'Nuxt.js', strong: true },
-            { name: 'CSS' },
-            { name: 'SCSS' },
-            { name: 'Bootstrap', strong: true },
-            { name: 'Bulma' }
+            { name: "Vue.js" },
+            { name: "Nuxt.js", strong: true },
+            { name: "CSS" },
+            { name: "SCSS" },
+            { name: "Bootstrap", strong: true },
+            { name: "Bulma" }
           ]
         },
         {
-          title: 'VC & CI',
-          id: 'skill-vc-ci',
+          title: "VC & CI",
+          id: "skill-vc-ci",
           rating: 4,
-          list: [{ name: 'Git', strong: true }, { name: 'Travis CI' }]
+          list: [{ name: "Git", strong: true }, { name: "Travis CI" }]
         },
         {
-          title: 'Others',
-          id: 'skill-tools',
+          title: "Others",
+          id: "skill-tools",
           rating: 4,
           list: [
-            { name: 'Github desktop', strong: true },
-            { name: 'Visual Studio' },
-            { name: 'Visual Studio Code', strong: true },
-            { name: 'JSON', strong: true }
+            { name: "Github desktop", strong: true },
+            { name: "Visual Studio" },
+            { name: "Visual Studio Code", strong: true },
+            { name: "JSON", strong: true }
           ]
         }
       ]
-    }
-  },
+    };
+  },*/
   methods: {
-    getSkillName (skill, index, length) {
-      return `${skill}${index < length - 1 ? ', ' : ''}`
+    getSkillName(skill, index, length) {
+      return `${skill}${index < length - 1 ? ", " : ""}`;
     }
   }
-}
+};
 </script>
 
 <style scoped>

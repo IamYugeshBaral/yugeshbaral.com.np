@@ -66,7 +66,7 @@ export default {
   data() {
     return {
       age: Math.floor(
-        (Date.now() - new Date("1998-03-11")) / (1000 * 60 * 60 * 24 * 365)
+        (Date.now() - new Date("1999-09-10")) / (1000 * 60 * 60 * 24 * 365)
       )
     };
   } /*
