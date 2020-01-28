@@ -40,7 +40,7 @@ export default {
       images: [
         //{ name: "Vue.js", image: "img/technology/vuejs.png" },
         //{ name: "Nuxt.js", image: "img/technology/nuxtjs.png" },
-         { name: 'Github', image: 'img/technology/github.png' },
+        { name: "Github", image: "img/technology/github.png" },
         { name: "Git", image: "img/technology/git.png" },
         { name: "Bootstrap", image: "img/technology/bootstrap.png" },
         //{ name: "Node.js", image: "img/technology/nodejs.png" },
@@ -61,7 +61,7 @@ export default {
             // { name: "Visual Basics" },
             { name: "SQL", strong: true }
           ]
-        }
+        } /*
         {
           title: "Front End Technologies",
           id: "skill-front-end",
