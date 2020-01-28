@@ -40,18 +40,18 @@ export default {
       images: [
         //{ name: "Vue.js", image: "img/technology/vuejs.png" },
         //{ name: "Nuxt.js", image: "img/technology/nuxtjs.png" },
-        // { name: 'Github', image: 'img/technology/github.png' },
-        //{ name: "Git", image: "img/technology/git.png" },
-        //{ name: "Bootstrap", image: "img/technology/bootstrap.png" },
+         { name: 'Github', image: 'img/technology/github.png' },
+        { name: "Git", image: "img/technology/git.png" },
+        { name: "Bootstrap", image: "img/technology/bootstrap.png" },
         //{ name: "Node.js", image: "img/technology/nodejs.png" },
-        //{ name: "VS Code", image: "img/technology/vscode.png" },
+        { name: "VS Code", image: "img/technology/vscode.png" },
         { name: "PHP", image: "img/technology/php.png" }
       ],
       skills: [
         {
           title: "Programming Languages",
           id: "skill-languages",
-          rating: 4,
+          rating: 3,
           list: [
             { name: "Javascript", strong: true },
             { name: "C" },
@@ -62,19 +62,19 @@ export default {
             { name: "SQL", strong: true }
           ]
         }
-        /*{
+        {
           title: "Front End Technologies",
           id: "skill-front-end",
           rating: 3,
           list: [
-            { name: "Vue.js" },
-            { name: "Nuxt.js", strong: true },
+            //{ name: "Vue.js" },
+            //{ name: "Nuxt.js", strong: true },
             { name: "CSS" },
-            { name: "SCSS" },
+           // { name: "SCSS" },
             { name: "Bootstrap", strong: true },
-            { name: "Bulma" }
+            //{ name: "Bulma" }
           ]
-        },
+        },/*
         {
           title: "VC & CI",
           id: "skill-vc-ci",
