@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Yugesh Baral</title>
+    <meta name="description" content="Get in touch with Yugesh Baral for SEO audits, technical strategy, or SEO engineering inquiries.">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --text-main: #111111;
+            --text-muted: #666666;
+            --accent: #0052ff;
+            --border: #eeeeee;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background-color: var(--bg); 
+            color: var(--text-main); 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container { max-width: 850px; margin: 0 auto; padding: 0 1.5rem; }
+
+        /* Shared Navigation */
+        nav { padding: 2rem 0; border-bottom: 1px solid var(--border); }
+        .nav-logo { font-weight: 800; font-size: 1.2rem; text-decoration: none; color: var(--text-main); letter-spacing: -0.5px; }
+
+        /* Header Area */
+        header { padding: 8rem 0 4rem 0; }
+        h1 { font-size: 3.5rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 1rem; }
+        .intro-text { font-size: 1.2rem; color: var(--text-muted); max-width: 600px; }
+
+        /* Contact Grid */
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; padding-bottom: 5rem; }
+        .section-label { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; display: block; letter-spacing: 0.1em; }
+        
+        .contact-method h3 { font-size: 1.1rem; margin-bottom: 1rem; font-weight: 700; }
+        .social-big-links { list-style: none; }
+        .social-big-links li { margin-bottom: 1rem; }
+        .social-big-links a { 
+            font-size: 1.5rem; 
+            font-weight: 700; 
+            color: var(--text-main); 
+            text-decoration: none; 
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.2s;
+        }
+        .social-big-links a:hover { color: var(--accent); padding-left: 10px; }
+        .social-big-links a span { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; font-weight: 400; color: var(--text-muted); }
+
+        .location-info { font-size: 1rem; color: var(--text-muted); }
+        .location-info strong { color: var(--text-main); display: block; margin-bottom: 0.5rem; }
+
+        /* Shared Footer */
+        footer { padding: 6rem 0 4rem 0; background: #fafafa; border-top: 1px solid var(--border); }
+        .footer-bottom { margin-top: 4rem; display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-muted); }
+        .footer-bottom a { color: var(--text-muted); text-decoration: none; }
+
+        @media (max-width: 768px) {
+            .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+            h1 { font-size: 2.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="container">
+            <a href="index.html" class="nav-logo">Yugesh Baral.</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <header>
+            <h1>Let's Connect.</h1>
+            <p class="intro-text">Whether you're looking for an SEO technical audit, strategy collaboration, or just want to talk about computers, feel free to reach out.</p>
+        </header>
+
+        <div class="contact-grid">
+            <div class="contact-method">
+                <span class="section-label">01 // Social Handles</span>
+                <ul class="social-big-links">
+                    <li><a href="https://linkedin.com/in/iamyugeshbaral/" target="_blank">LinkedIn <span>/iamyugeshbaral</span></a></li>
+                    <li><a href="https://x.com/IamYugeshBaral" target="_blank">Twitter <span>/IamYugeshBaral</span></a></li>
+                    <li><a href="https://www.facebook.com/profile.php?id=61588563690113" target="_blank">Facebook <span>/YugeshBaral</span></a></li>
+                </ul>
+            </div>
+
+            <div class="contact-method">
+                <span class="section-label">02 // Location & Work</span>
+                <div class="location-info">
+                    <strong>Based in</strong>
+                    <p>Kathmandu, Nepal</p>
+                    <p>Timezone: GMT+5:45</p>
+                    <br>
+                    <strong>Current Role</strong>
+                    <p>SEO Specialist @ RankMeTop</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-bottom">
+                <div>© 2026 YUGESH BARAL — SEO ENGINEER</div>
+                <div>
+                    <a href="index.html" style="margin-right: 20px;">Home</a>
+                    <a href="privacy.html">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
