@@ -3,7 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nepal Bank Transfer QR Generator</title>
+<title>Nepali Bank QR Generator | Free Bank Transfer QR Tool</title>
+<meta name="description" content="Generate a free Nepali bank transfer QR code with account holder name, bank, account number, amount, and remarks. Built by Yugesh Baral for quick mobile banking fund transfers in Nepal.">
+<meta name="keywords" content="Nepali bank QR generator, Nepal bank transfer QR, bank QR code Nepal, eSewa bank transfer QR, mobile banking QR Nepal, Yugesh Baral">
+<meta name="author" content="Yugesh Baral">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://yugeshbaral.com.np/bank-qr.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Nepali Bank QR Generator">
+<meta property="og:description" content="Create a free Nepali bank transfer QR code for mobile banking fund transfers with account details, amount, and remarks.">
+<meta property="og:url" content="https://yugeshbaral.com.np/bank-qr.html">
+<meta property="og:site_name" content="Yugesh Baral">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nepali Bank QR Generator">
+<meta name="twitter:description" content="Generate a free Nepali bank transfer QR code for quick mobile banking fund transfers.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -31,7 +44,10 @@ header{padding:32px 0 0;display:flex;align-items:center;justify-content:space-be
 .logo-box svg{width:22px;height:22px;fill:white}
 .logo-name{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;letter-spacing:-.4px}
 .logo-name span{color:var(--red)}
-.badge{font-size:.71rem;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);padding:5px 12px;border-radius:99px;background:var(--white)}
+.header-actions{display:flex;align-items:center;gap:10px}
+.badge,.site-btn{font-size:.71rem;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);padding:5px 12px;border-radius:99px;background:var(--white)}
+.site-btn{color:#fff;background:var(--blue);border-color:var(--blue);text-decoration:none;transition:background .18s,transform .1s}
+.site-btn:hover{background:#002a66;transform:translateY(-1px)}
 
 /* HERO */
 .hero{padding:52px 0 32px}
@@ -46,6 +62,7 @@ header{padding:32px 0 0;display:flex;align-items:center;justify-content:space-be
 /* MAIN */
 .main{display:grid;grid-template-columns:1fr 380px;gap:24px;padding-bottom:80px;align-items:start}
 @media(max-width:760px){.main{grid-template-columns:1fr}.qr-sticky{position:static!important}}
+@media(max-width:560px){header{align-items:flex-start;gap:16px;flex-direction:column}.header-actions{width:100%;justify-content:space-between}}
 
 /* CARD */
 .card{background:rgba(253,252,248,.85);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:var(--radius);padding:28px}
@@ -116,7 +133,10 @@ footer strong{color:var(--ink);font-weight:500}
     </div>
     <div class="logo-name">YOGI <span>QR</span></div>
   </div>
-  <div class="badge">Free · No Signup</div>
+  <div class="header-actions">
+    <div class="badge">Free · No Signup</div>
+    <a class="site-btn" href="https://yugeshbaral.com.np/">Main Site</a>
+  </div>
 </header>
 
 <div class="hero">
