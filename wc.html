@@ -7,21 +7,46 @@
 <title>Live Player</title>
 <style>
   :root{
-    --bg:#000; --text:#e8eef4; --muted:#8a97a4;
-    --live:#ff4d4d; --accent:#4fd1c5;
+    --bg:#000; --panel:#0c0f12; --text:#e8eef4; --muted:#8a97a4;
+    --live:#ff4d4d; --accent:#4fd1c5; --border:rgba(255,255,255,.08);
   }
   *{ box-sizing:border-box; }
   html,body{ height:100%; }
   body{
     margin:0; background:var(--bg); color:var(--text);
     font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-    display:grid; place-items:center; min-height:100vh;
+    display:flex; flex-direction:column; align-items:center; min-height:100vh;
   }
+
+  .toolbar{
+    width:100%; max-width:100vw; background:var(--panel);
+    border-bottom:1px solid var(--border);
+    padding:10px 14px; display:flex; flex-wrap:wrap; gap:10px; align-items:center;
+  }
+  .toolbar label{ font-size:12px; color:var(--muted); letter-spacing:.04em; text-transform:uppercase; }
+  .toolbar select,
+  .toolbar input[type="text"]{
+    background:#11161b; color:var(--text); border:1px solid var(--border);
+    border-radius:8px; padding:8px 10px; font-size:13px;
+    appearance:none;
+  }
+  .toolbar select{ min-width:220px; cursor:pointer; }
+  .toolbar input[type="text"]{ min-width:320px; flex:1 1 320px; font-family:ui-monospace,monospace; font-size:12px; }
+  .toolbar select:focus,
+  .toolbar input[type="text"]:focus{ outline:2px solid var(--accent); outline-offset:1px; }
+  .toolbar .grow{ flex:1; }
+  .toolbar button{
+    background:#11161b; color:var(--text); border:1px solid var(--border);
+    border-radius:8px; padding:8px 12px; font-size:13px; cursor:pointer;
+  }
+  .toolbar button:hover{ border-color:var(--accent); color:var(--accent); }
+
   .stage{
     position:relative; width:100%; max-width:100vw; aspect-ratio:16/9;
-    max-height:100vh; background:#000;
+    flex:1 1 auto; background:#000;
   }
-  .stage video{ width:100%; height:100%; display:block; background:#000; }
+  .stage video,
+  .stage iframe{ width:100%; height:100%; display:block; background:#000; border:0; }
 
   .badges{ position:absolute; top:14px; left:14px; display:flex; gap:8px; z-index:2; }
   .badge{
@@ -52,7 +77,18 @@
 </style>
 </head>
 <body>
-  <div class="stage">
+  <div class="toolbar">
+    <label for="src">Source</label>
+    <select id="src">
+      <option value="__primary__">Primary stream (default)</option>
+      <option value="" disabled>— Loading fallback list… —</option>
+    </select>
+    <button id="reload" title="Refresh playlist">↻ Refresh list</button>
+    <span class="grow"></span>
+    <span id="status" style="font-size:12px;color:var(--muted);"></span>
+  </div>
+
+  <div class="stage" id="stage">
     <video id="video" controls playsinline autoplay></video>
     <div class="badges" id="badges"></div>
     <div class="overlay-msg" id="overlay"><span class="spinner"></span>Connecting…</div>
@@ -61,25 +97,28 @@
 <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.13/dist/hls.min.js"></script>
 <script>
 /* ============================================================
-   CONFIG — update this for your stream.
+   CONFIG
    ============================================================ */
 const CONFIG = {
-  // Your .m3u8 stream URL. This is the only line you need to change.
-  STREAM_URL: "https://ott-nettv-01.nettv.com.np/ffplay/wc-Himalaya2/playlist.m3u8?wmsAuthSign=c2VydmVyX3RpbWU9Ni8xOC8yMDI2IDEyOjI1OjQyIEFNJmhhc2hfdmFsdWU9ZmN2dGZLRER1RGUxTjJidEI4azlkdz09JnZhbGlkbWludXRlcz0xNDQwJmlkPTIwMA==",
-
-  // Optional: start muted (browsers block autoplay-with-sound until the
-  // user interacts, so muted=true makes autoplay reliable).
+  STREAM_URL: "https://d1211whpimeups.cloudfront.net/smil:rtb2/chunklist.m3u8",
+  FALLBACK_PLAYLIST_URL: "https://cr7world.pages.dev/playlist.json",
+  // Fail fast so we move to the next source quickly.
+  ATTEMPT_TIMEOUT_MS: 4000,
   START_MUTED: true,
 };
 
-/* Allow a quick override for testing via  player.html?url=...  */
 const urlOverride = new URLSearchParams(location.search).get("url");
-const STREAM_URL = urlOverride || CONFIG.STREAM_URL;
+const PRIMARY_URL = urlOverride || CONFIG.STREAM_URL;
 /* ============================================================ */
 
 const $ = id => document.getElementById(id);
-const video = $("video");
+const stage = $("stage");
+const srcSelect = $("src");
+const statusEl = $("status");
+let video = $("video");
 let hls = null;
+let candidates = [];   // [{key,url,kind}]
+let currentKey = null;
 
 video.muted = CONFIG.START_MUTED;
 
@@ -95,58 +134,166 @@ function setBadges(arr){
       : `<span class="badge">${b}</span>`
   ).join("");
 }
+function setStatus(t){ statusEl.textContent = t || ""; }
 
-function destroy(){
-  if (hls){ hls.destroy(); hls = null; }
-  video.removeAttribute("src"); video.load();
+function destroyPlayer(){
+  if (hls){ try{ hls.destroy(); }catch(_){} hls = null; }
+  const existing = stage.querySelector("video, iframe");
+  if (existing && existing.tagName === "IFRAME"){
+    const v = document.createElement("video");
+    v.id = "video"; v.controls = true; v.playsInline = true; v.autoplay = true;
+    v.muted = CONFIG.START_MUTED;
+    existing.replaceWith(v);
+    video = v;
+  } else if (video){
+    try{ video.pause(); }catch(_){}
+    video.removeAttribute("src");
+    try{ video.load(); }catch(_){}
+  }
 }
 
-function play(src){
-  if (!src){ setOverlay("No stream URL configured."); return; }
-  destroy();
-  setOverlay('<span class="spinner"></span>Connecting…');
-  setBadges([]);
+function swapToIframe(src){
+  destroyPlayer();
+  const f = document.createElement("iframe");
+  f.src = src;
+  f.allow = "autoplay; encrypted-media; fullscreen; picture-in-picture";
+  f.allowFullscreen = true;
+  f.referrerPolicy = "no-referrer";
+  const v = stage.querySelector("video");
+  if (v) v.replaceWith(f); else stage.prepend(f);
+}
 
-  // Safari / iOS play HLS natively.
-  if (video.canPlayType("application/vnd.apple.mpegurl")){
-    video.src = src;
-    video.addEventListener("loadedmetadata", () => {
-      setOverlay(""); setBadges(["LIVE"]); video.play().catch(() => {});
-    }, { once:true });
-    video.addEventListener("error", () => setOverlay("Could not load this stream."), { once:true });
-    return;
-  }
+function tryHls(src){
+  return new Promise(resolve => {
+    destroyPlayer();
+    setBadges([]);
+    let done = false;
+    const finish = ok => { if (!done){ done = true; clearTimeout(timer); resolve(ok); } };
+    const timer = setTimeout(() => finish(false), CONFIG.ATTEMPT_TIMEOUT_MS);
 
-  if (!(window.Hls && Hls.isSupported())){
-    setOverlay("This browser cannot play HLS."); return;
-  }
-
-  hls = new Hls({ lowLatencyMode:true, liveSyncDuration:3, enableWorker:true });
-  hls.loadSource(src);
-  hls.attachMedia(video);
-
-  hls.on(Hls.Events.MANIFEST_PARSED, (_e, data) => {
-    setOverlay("");
-    setBadges([ data.levels.length > 1 ? "ABR" : "SINGLE", "LIVE" ]);
-    video.play().catch(() => {});
-  });
-
-  hls.on(Hls.Events.ERROR, (_e, data) => {
-    if (!data.fatal) return;
-    if (data.type === Hls.ErrorTypes.NETWORK_ERROR){
-      setOverlay('<span class="spinner"></span>Network error — retrying…');
-      hls.startLoad();
-    } else if (data.type === Hls.ErrorTypes.MEDIA_ERROR){
-      setOverlay('<span class="spinner"></span>Media error — recovering…');
-      hls.recoverMediaError();
-    } else {
-      setOverlay("Stream offline or unreachable.");
-      destroy();
+    if (video.canPlayType("application/vnd.apple.mpegurl")){
+      video.src = src;
+      video.addEventListener("loadedmetadata", () => {
+        setBadges(["LIVE"]); video.play().catch(() => {}); finish(true);
+      }, { once:true });
+      video.addEventListener("error", () => finish(false), { once:true });
+      return;
     }
+
+    if (!(window.Hls && Hls.isSupported())){ finish(false); return; }
+
+    hls = new Hls({ lowLatencyMode:true, liveSyncDuration:3, enableWorker:true });
+    hls.loadSource(src);
+    hls.attachMedia(video);
+    hls.on(Hls.Events.MANIFEST_PARSED, (_e, data) => {
+      setBadges([ data.levels.length > 1 ? "ABR" : "SINGLE", "LIVE" ]);
+      video.play().catch(() => {});
+      finish(true);
+    });
+    hls.on(Hls.Events.ERROR, (_e, data) => {
+      if (data.fatal) finish(false);
+    });
   });
 }
 
-play(STREAM_URL);
+function buildCandidates(json){
+  const direct = [], iframes = [];
+  for (const [key, val] of Object.entries(json || {})){
+    if (!val || typeof val !== "object" || !val.url) continue;
+    const url = String(val.url).trim();
+    if (!url) continue;
+    if (val.type === "iframe"){
+      iframes.push({ key, url, kind:"iframe" });
+    } else if (/\.m3u8(\?|$)/i.test(url) && !val.clearKeys){
+      direct.push({ key, url, kind:"hls" });
+    }
+    // DRM-protected MPDs are skipped — this player can't decrypt them.
+  }
+  return [...direct, ...iframes];
+}
+
+function populateSelect(){
+  const groupHls = candidates.filter(c => c.kind === "hls");
+  const groupIfr = candidates.filter(c => c.kind === "iframe");
+  const opt = (c) =>
+    `<option value="${c.kind}:${c.key}">${c.key}${c.kind === "iframe" ? "  (embed)" : ""}</option>`;
+
+  srcSelect.innerHTML = `
+    <option value="__primary__">Primary stream (default)</option>
+    ${groupHls.length ? `<optgroup label="Direct HLS">${groupHls.map(opt).join("")}</optgroup>` : ""}
+    ${groupIfr.length ? `<optgroup label="Iframe embeds">${groupIfr.map(opt).join("")}</optgroup>` : ""}
+  `;
+}
+
+async function loadPlaylist(){
+  setStatus("Loading fallback list…");
+  try {
+    const res = await fetch(CONFIG.FALLBACK_PLAYLIST_URL, { cache:"no-store" });
+    const json = await res.json();
+    candidates = buildCandidates(json);
+    populateSelect();
+    setStatus(`${candidates.length} fallback source${candidates.length === 1 ? "" : "s"} available`);
+  } catch(e){
+    setStatus("Fallback list unreachable");
+  }
+}
+
+async function playPrimary(){
+  currentKey = "__primary__";
+  setOverlay('<span class="spinner"></span>Connecting to primary…');
+  const ok = await tryHls(PRIMARY_URL);
+  if (ok){ setOverlay(""); return true; }
+  setOverlay("Primary stream offline.");
+  return false;
+}
+
+async function playCandidate(c){
+  currentKey = `${c.kind}:${c.key}`;
+  setOverlay(`<span class="spinner"></span>Loading ${c.key}…`);
+  if (c.kind === "hls"){
+    const ok = await tryHls(c.url);
+    if (ok){ setOverlay(""); setBadges([c.key.toUpperCase(), "LIVE"]); return true; }
+    setOverlay(`Could not load ${c.key}.`);
+    return false;
+  } else {
+    swapToIframe(c.url);
+    setOverlay("");
+    setBadges([c.key.toUpperCase(), "EMBED"]);
+    return true;
+  }
+}
+
+srcSelect.addEventListener("change", async () => {
+  const val = srcSelect.value;
+  if (val === "__primary__"){ await playPrimary(); return; }
+  const [kind, key] = val.split(":");
+  const c = candidates.find(x => x.kind === kind && x.key === key);
+  if (c) await playCandidate(c);
+});
+
+$("reload").addEventListener("click", loadPlaylist);
+
+async function autoFallback(){
+  setOverlay('<span class="spinner"></span>Primary offline — trying fallbacks…');
+  let waited = 0;
+  while (!candidates.length && waited < 5000){
+    await new Promise(r => setTimeout(r, 200)); waited += 200;
+  }
+  for (let i = 0; i < candidates.length; i++){
+    const c = candidates[i];
+    setOverlay(`<span class="spinner"></span>Trying ${i+1}/${candidates.length} — ${c.key}…`);
+    const ok = await playCandidate(c);
+    if (ok){ srcSelect.value = `${c.kind}:${c.key}`; return true; }
+  }
+  setOverlay("All sources failed. Pick another from the dropdown above.");
+  return false;
+}
+
+(async function start(){
+  loadPlaylist();
+  const ok = await playPrimary();
+  if (!ok) await autoFallback();
+})();
 </script>
 </body>
 </html>
