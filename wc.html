@@ -100,11 +100,11 @@
    CONFIG
    ============================================================ */
 const CONFIG = {
-  STREAM_URL: "https://ott-nettv-01.nettv.com.np/ffplay/wc-Himalaya2/playlist.m3u8?nimblesessionid=732122&wmsAuthSign=c2VydmVyX3RpbWU9Ni8yMi8yMDI2IDM6NTM6MzIgUE0maGFzaF92YWx1ZT1VcGtyV3JXdVlSY0ZCUHhtenZWUzZnPT0mdmFsaWRtaW51dGVzPTE0NDAmaWQ9MjAw",
+  STREAM_URL: "https://ott-nettv-02.nettv.com.np/ffplay/wc-Himalaya2/playlist.m3u8?wmsAuthSign=c2VydmVyX3RpbWU9Ni8yMy8yMDI2IDQ6MTc6NDIgUE0maGFzaF92YWx1ZT1KOUw2NnpvcE41djNNZmgvK1VKTXpnPT0mdmFsaWRtaW51dGVzPTE0NDAmaWQ9MjAw",
   FALLBACK_PLAYLIST_URL: "https://cr7world.pages.dev/playlist.json",
   // High-priority fallbacks tried BEFORE playlist.json entries.
   PRIORITY_FALLBACKS: [
-    { key: "xyzstreams-wc8", url: "https://xyzstreams.shop/wc-8-embed", kind: "iframe" },
+    { key: "fox", url: "https://inproviszon.st/fox-1.m3u8", kind: "m3u8" },
   ],
   // Fail fast so we move to the next source quickly.
   ATTEMPT_TIMEOUT_MS: 4000,
